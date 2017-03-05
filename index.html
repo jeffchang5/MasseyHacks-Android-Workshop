@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>An Introduction to Android</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body { font-family: 'Droid Serif'; }
+      body { 
+        font-family: 'Droid Sans';
+        color: white; 
+        line-height: 30px;
+        font-size: 2em;
+      }
+
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
+        color: #FF8674;
+        text-shadow: 3px -1px 2px rgba(150, 150, 150, 1);
         font-weight: normal;
       }
+
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      
+      .remark-slide-content{
+        background-color: #FF534E;
+        
+      }
+
     </style>
   </head>
   <body>
@@ -21,25 +36,68 @@
 
 class: center, middle
 
-# Title
+# An Introduction to Android
+
+
+
+
+---
+class: middle
+
+# History of Android
+* Founded by Andy Rubin in 2003
+* Acquired by Google in 2005
+* First commercial phone avaliable in 2008
+* From Cupcake to Nougat
+
+---
+class: middle
+
+# Why does Android matter?
+
+* The most popular mobile operating system
+* Open-source project
+* Powers tablets, laptops, TV boxes, cars, watches
+
+```java
+System.out.println("Hello World");
+```
 
 ---
 
-# Agenda
+# The Software Stack
 
-1. Introduction
-2. Deep-dive
-3. ...
+.center[![Architecture](images/architecture.jpg)]
 
 ---
 
-# Introduction
+class: center middle
+
+# Android Studio
+
+
+
+IDE used specifically for Android app development.
+
+
+
+
+
+
 
     </textarea>
     <script src="remark.min.js">
     </script>
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({
+        
+          navigation: {
+            scroll: true,
+            touch: true,
+            click: false
+          },
+          highlightStyle: "rainbow"
+    });
     </script>
   </body>
 </html>
