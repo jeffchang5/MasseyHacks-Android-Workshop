@@ -1,7 +1,0 @@
-#Tue Mar 14 23:20:27 EDT 2017
-base.0=/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/OpenWeatherList/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_af2b657fb7b2ee7db092ff05645cfd7adbedcb36
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/OpenWeatherList/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8c1bc57d5f4f7f22602086cb5f1f23f55200f5c4/classes.dex
-base.1=/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/OpenWeatherList/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8c1bc57d5f4f7f22602086cb5f1f23f55200f5c4
-file.0=/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/OpenWeatherList/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_af2b657fb7b2ee7db092ff05645cfd7adbedcb36/classes.dex
