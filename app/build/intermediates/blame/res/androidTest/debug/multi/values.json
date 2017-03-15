@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/OpenWeatherList/app/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 45,
+                    "endOffset": 96
+                },
+                "from": {
+                    "file": "/Users/jeffreychang/.android/build-cache/dcaf01dda5522fc7f1aa393c3e3d1f8c52c760da/output/res/values/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 229,
+                        "endColumn": 45,
+                        "endOffset": 270
+                    }
+                }
+            }
+        ]
+    }
+]
