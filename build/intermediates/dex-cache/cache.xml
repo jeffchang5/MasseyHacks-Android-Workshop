@@ -3,111 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/689f2095f579e37ac8bb389a5f113020728d22f0/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a2a8ca2db6b37ed11d84ac5ec5af340a6793d53f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/9727abb48852433bd4a42148f31bd2c2c247a121/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4b3c7ff760c2e3b94800c747ba9201d31601922f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="98d5da1822d4b4ec055b3c3d982d127f770d3fb9">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c0f402e32d77372f1e2a336188eca31b4b870a78/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/630e5bfd940f359ea057814491d76095a6bc7b1c/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0503134602f76b5df7f01816f3dee66587c4e586/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/b13a9171d914cd100d0d8e900d90dc6bf8aa47d8/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e870d1aacc3a79f2d48be287577c72ee375b6b3e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/ec2604673d3bcdd4e4ef9769e47824dcf590fe3e/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_d6f11e00a86620aa1929a2f93d8ad771050b99cd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/ed26df99c890216c64a6378772aca5701ce36dc6/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7af56075ca0e5128971051f9ed01474b9220bca2/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1ef22e425ce4d581cf6653be0d6b81dc99ce976c/classes.dex" />
+        <dex dex="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_a1ae0bbe732b310fb5942fc4aeb78f458075f049/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/daaa0565bf691b7340d136c86bdabbee9d9e10e9/output/jars/classes.jar"
+        jar="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6b0fd8f375b2631c5e9d3132086b3ab424409388/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/52fe3dfbce148b5eafdc23233c341e482d23c428/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_60640632c7ad74423f43fe90d18b8db61c888ebd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/407cd3a7c609f072e7281c0e0bdcc2708167222a/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_39361634ce26e165347d58d8508b217819471112/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/.android/build-cache/74686690e17927c3e8cb49af2dbb424745eb886a/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
-        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1f9d73d509a9c3ff4d035b87cd8d2f955543af66/classes.dex" />
+        sha1="ef060ee1a8861ef92ab11a53eca4f365643c551c">
+        <dex dex="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f43bb59aa4d691c5de8b8b96b74fad058fa64365/classes.dex" />
     </item>
 
 </items>

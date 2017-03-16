@@ -2,6 +2,7 @@ package xyz.jeffreychang.openweatherlist;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,9 +15,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
         NetworkSingleton singleton = NetworkSingleton.getInstance(this);
         Log.d("NetworkSingleton", NetworkSingleton.urlBuilder("35", "139"));
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

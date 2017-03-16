@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley;
 
 public class NetworkSingleton {
     private String TAG = "NetworkSingleton";
-    RequestQueue mRequestQueue;
+    private RequestQueue mRequestQueue;
     private static NetworkSingleton mNetworkSingleton;
     private Context mContext;
 
