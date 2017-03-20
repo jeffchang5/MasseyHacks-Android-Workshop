@@ -8,6 +8,10 @@ import java.net.URL;
 
 public class Weather {
 
+    public Weather() {
+
+    }
+
 
 
 

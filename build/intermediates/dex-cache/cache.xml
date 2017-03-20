@@ -3,21 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_a1ae0bbe732b310fb5942fc4aeb78f458075f049/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ef060ee1a8861ef92ab11a53eca4f365643c551c">
-        <dex dex="/Users/jeffreychang/Developer/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_f43bb59aa4d691c5de8b8b96b74fad058fa64365/classes.dex" />
+        sha1="005f41df4003b3dc8b66d0844dd29f1addae7521">
+        <dex dex="/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c0f402e32d77372f1e2a336188eca31b4b870a78/classes.dex" />
     </item>
 
 </items>
