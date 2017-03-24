@@ -1,6 +1,9 @@
 package xyz.jeffreychang.openweatherlist;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +19,7 @@ import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "WeatherActivity";
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.location:
+                getLocation();
                 Log.d(TAG, "Location selected");
 
                 break;
@@ -51,6 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    public void getLocation() {
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (checkSelfPermission(Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant
+
+            return;
+        }
+
+    }
     public AlertDialog buildAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage(R.string.help_message)
@@ -58,11 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.ok, null);
         return builder.create();
     }
-    public void getLocation() {
-
-        LocationManager locationManager =  (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
 
 
-    }
+
 }

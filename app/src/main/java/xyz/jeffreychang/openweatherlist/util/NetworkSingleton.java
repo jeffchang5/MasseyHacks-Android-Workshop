@@ -15,25 +15,28 @@ public class NetworkSingleton {
     private Context mContext;
 
     private NetworkSingleton (Context c) {
-        mRequestQueue = Volley.newRequestQueue(c);
-
-
-
+        this.mContext = c;
 
     }
+
     public static synchronized NetworkSingleton getInstance(Context c) {
         if (mNetworkSingleton == null) {
             mNetworkSingleton = new NetworkSingleton(c);
         }
             return mNetworkSingleton;
+    }
+    public RequestQueue getRequestQueue() {
 
+        if (mRequestQueue == null) {
+                mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+        }
+        return mRequestQueue;
 
     }
     public static String urlBuilder(String latitude, String longitude) {
         String api_key = "577b001467139c35c3e90b3d2dcd4456";
         String url = "http://samples.openweathermap.org/data/2.5/forecast";
         return String.format("%s?lat=%s&lon=%s&appid=%s", url, "35", "139", api_key);
-
 
     }
 }
