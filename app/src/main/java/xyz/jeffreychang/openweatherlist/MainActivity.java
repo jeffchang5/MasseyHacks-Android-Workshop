@@ -22,6 +22,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,16 +37,17 @@ public class MainActivity extends AppCompatActivity {
     private final int REQUEST_LOCATION = 1;
     private final static String LAT = "lat";
     private final static String LON = "lon";
-    private final static String VALID = "valid";
+    private final static String URL = "url";
+
+    private SharedPreferences pref = null;
 
     double latitude = -1;
     double longitude = -1;
-    boolean valid = false;
+    String url = null;
 
     LocationManager locationManager = null;
     private ActiveListener activeListener = new ActiveListener();
-
-    private SharedPreferences pref = null;
+    private NetworkSingleton singleton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +57,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        NetworkSingleton singleton = NetworkSingleton.getInstance(MainActivity.this);
-        Log.d("NetworkSingleton", NetworkSingleton.urlBuilder("35", "139"));
+        singleton = new NetworkSingleton(getApplicationContext());
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         latitude = Double.parseDouble(pref.getString(LAT, "-1"));
         longitude = Double.parseDouble(pref.getString(LON, "-1"));
-        valid = Boolean.parseBoolean(pref.getString(VALID, "0"));
+        url = pref.getString(URL ,null);
     }
 
     @Override
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setUI();
+        requestWeather();
     }
 
     @Override
@@ -129,38 +136,60 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Update UI to display new location
-     * @param location New location
      */
-    private void requestWeather(Location location) {
+    private void requestWeather() {
+        if (url != null) {
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // SET UP UI
+                            Log.d("JSON RESPONSE", response.toString());
+                            setUI(response);
 
-        Log.d("LOCATION",location.getProvider());
-        Log.d("LOCATION",String.valueOf(location.getAccuracy()));
-        Log.d("LOCATION",String.valueOf(location.getLatitude()));
-        Log.d("LOCATION",String.valueOf(location.getLongitude()));
+                        }
+                    },
 
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        valid = true;
-        savePreferences();
-        setUI();
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // TODO Auto-generated method stub
+                                }
+                            });
+
+            singleton.getRequestQueue().add(jsObjRequest);
+        }
     }
 
-    private void savePreferences() {
+    private void savePreferences(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        url = singleton.urlBuilder(latitude, longitude);
+
+        // DEBUG
+        Log.d("LOCATION",location.getProvider());
+        Log.d("LOCATION",String.valueOf(location.getAccuracy()));
+        Log.d("LOCATION",String.valueOf(latitude));
+        Log.d("LOCATION",String.valueOf(longitude));
+        Log.d("NetworkSingleton", url);
+
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor edit = settings.edit();
         edit.putString(LAT, String.valueOf(latitude));
         edit.putString(LON, String.valueOf(longitude));
-        edit.putString(VALID, String.valueOf(valid));
+        edit.putString(URL, url);
         edit.apply();
+
+        requestWeather();
     }
-    private void setUI() {
-        if (!valid) {
+
+    private void setUI(JSONObject response) {
+        if (response != null) {
+            //TODO: set up UI
             return;
         }
-        else {
-            // set up UI
-        }
     }
+
 
     /**
      * Unregisters the location listener
@@ -186,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onLocationChanged(Location location) {
             if (location != null && location.getAccuracy() < 500) {
-                requestWeather(location);
+                savePreferences(location);
                 unregisterListeners();
             }
 
