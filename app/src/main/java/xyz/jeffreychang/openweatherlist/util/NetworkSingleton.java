@@ -1,6 +1,6 @@
 package xyz.jeffreychang.openweatherlist.util;
-import android.content.Context;
 
+import android.content.Context;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -11,20 +11,31 @@ import com.android.volley.toolbox.Volley;
 
 public class NetworkSingleton {
     private String TAG = "NetworkSingleton";
-    private RequestQueue mRequestQueue;
-    private NetworkSingleton mNetworkSingleton;
-    private Context mContext;
 
-    public NetworkSingleton (Context c) {
-        this.mContext = c;
+    private static final int FORECAST_DAYS = 5;
+    private static final String API_KEY = "577b001467139c35c3e90b3d2dcd4456";
+    private static final String URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
+
+    private RequestQueue mRequestQueue;
+    private static NetworkSingleton mNetworkSingleton = null;
+    private static Context mContext;
+
+    /**
+     * private constructor
+     * @param c Context: application context
+     */
+    private NetworkSingleton (Context c) {
+        mContext = c;
+        mRequestQueue = getRequestQueue();
     }
 
-    public synchronized NetworkSingleton getInstance(Context c) {
+    public static synchronized NetworkSingleton getInstance(Context c) {
         if (mNetworkSingleton == null) {
             mNetworkSingleton = new NetworkSingleton(c);
         }
             return mNetworkSingleton;
     }
+
     public RequestQueue getRequestQueue() {
 
         if (mRequestQueue == null) {
@@ -34,11 +45,12 @@ public class NetworkSingleton {
 
     }
 
-    public String urlBuilder(double latitude, double longitude) {
-        int days = 5;
-        String api_key = "577b001467139c35c3e90b3d2dcd4456";
-        String url = "http://api.openweathermap.org/data/2.5/forecast/daily";
-        return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s", url, latitude, longitude, days, api_key);
+    public <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
+    }
 
+    public String urlBuilder(double lat, double lon) {
+        return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s",
+                URL, lat, lon, FORECAST_DAYS, API_KEY);
     }
 }
