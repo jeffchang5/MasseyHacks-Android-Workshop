@@ -74,7 +74,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        requestWeather();
+        if (url == null) {
+            getLocation();
+        } else {
+            requestWeather();
+        }
     }
 
     @Override
