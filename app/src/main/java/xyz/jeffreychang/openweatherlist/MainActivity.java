@@ -29,12 +29,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import xyz.jeffreychang.openweatherlist.models.Weather;
+import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,11 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        getLocation();
 
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
-        latitude = Double.parseDouble(pref.getString(LAT, "-1"));
-        longitude = Double.parseDouble(pref.getString(LON, "-1"));
-        url = pref.getString(URL ,null);
     }
 
     @Override
@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
         criteria.setPowerRequirement(Criteria.POWER_LOW);
 
         String provider = locationManager.getBestProvider(criteria, true);
+        if (provider == null) {
+            Log.d(TAG, "null");
+        }
 
         if (provider != null) {
             // Get location permission
@@ -140,7 +143,38 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void createWeather(JSONArray weatherArray) {
 
+    }
+    private Weather[] createWeatherObject(JSONObject response) {
+        Weather [] weatherArray = new Weather[5];
+        try {
+            String city = response.getJSONObject("city").getString("name");
+            JSONArray weatherList = response.getJSONArray("list");
+            //Weather weather = new Weather(city);
+            Log.d(TAG, "5 Day Forecast for " + city);
+            Log.d(TAG, "5 Day Forecast for " + response.toString());
+            for (int i = 0; i < weatherList.length(); i++) {
+                JSONObject jweather = weatherList.getJSONObject(i);
+                JSONObject temp = jweather.getJSONObject("temp");
+                int timestamp = Integer.valueOf(jweather.getString("dt")) * 1000;
+                JSONObject descObj = jweather.getJSONArray("weather").getJSONObject(0);
+                String description = descObj.getString("description");
+                Log.d("daf", Integer.toString(Math.round(Integer.valueOf(temp.getString("min")))));
+                int min = Math.round(Integer.valueOf(temp.getString("min")));
+                int max = Math.round(Integer.valueOf(temp.getString("max")));
+                weatherArray[i] = new Weather(timestamp, description, min, max);
+            }
+
+            setUI(response);
+        }
+        catch(JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return weatherArray;
+
+
+    }
     /**
      * Update UI to display new location
      */
@@ -150,9 +184,9 @@ public class MainActivity extends AppCompatActivity {
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            // SET UP UI
-                            Log.d(TAG, response.toString());
-                            setUI(response);
+                            Weather [] weather = createWeatherObject(response);
+                            Log.d(TAG, weather[0].toString());// SET UP UI
+
 
                         }
                     },
@@ -171,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateLocation(Location location) {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+
         url = NetworkSingleton.getInstance(this).urlBuilder(latitude, longitude);
 
         // DEBUG
@@ -217,29 +252,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                  */
 
-                String city = response.getJSONObject("city").getString("name");
-                JSONArray weatherList = response.getJSONArray("list");
 
-                Log.d(TAG, "5 Day Forecast for " + city);
 
-                for (int i = 0; i < weatherList.length(); i++) {
-                    JSONObject weather = weatherList.getJSONObject(i);
-                    JSONObject temp = weather.getJSONObject("temp");
 
-                    long timestamp = Long.valueOf(weather.getString("dt")) * 1000;
-                    Date date = new java.util.Date(timestamp);
-                    String day = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US).format(date);
-                    double min = Double.valueOf(temp.getString("min")) * 9/5 - 459.67;
-                    double max = Double.valueOf(temp.getString("max")) * 9/5 - 459.67;
-                    JSONObject descObj = weather.getJSONArray("weather").getJSONObject(0);
-                    String description = descObj.getString("description");
-
-                    String forecast = String.format(Locale.getDefault(),
-                            "%s: %s. Low of %.0fºF, high of %.0fºF",
-                            day, description, min, max);
-
-                    Log.d(TAG, forecast);
-                }
             }
             catch (Exception e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());

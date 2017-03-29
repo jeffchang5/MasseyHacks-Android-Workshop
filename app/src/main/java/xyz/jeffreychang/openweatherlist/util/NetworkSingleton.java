@@ -50,7 +50,7 @@ public class NetworkSingleton {
     }
 
     public String urlBuilder(double lat, double lon) {
-        return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s",
+        return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s&units=metric",
                 URL, lat, lon, FORECAST_DAYS, API_KEY);
     }
 }
