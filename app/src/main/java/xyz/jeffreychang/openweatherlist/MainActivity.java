@@ -8,10 +8,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,29 +30,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import xyz.jeffreychang.openweatherlist.models.Weather;
-import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
 
     final String TAG = "WeatherActivity";
-    private final int REQUEST_LOCATION = 1;
+    private final int REQUEST_CODE_LOCATION = 1;
     private final static String LAT = "lat";
     private final static String LON = "lon";
     private final static String URL = "url";
 
-    private SharedPreferences pref = null;
+    double latitude;
+    double longitude;
+    String url;
 
-    double latitude = -1;
-    double longitude = -1;
-    String url = null;
+    LocationManager locationManager;
+    Location location;
 
-    LocationManager locationManager = null;
-    Location location = null;
     private ActiveListener activeListener = new ActiveListener();
 
     @Override
@@ -67,12 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         // Get location permission
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }
+
 
         // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -87,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (url == null) {
-            getLocation();
-        } else {
-            requestWeather();
-        }
+//        if (url == null) {
+//            getLocation();
+//        } else {
+//            requestWeather();
+//        }
     }
 
     @Override
@@ -128,32 +116,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getLocation() {
+
+
+
         // Create a Criteria object
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setPowerRequirement(Criteria.POWER_HIGH);
-        criteria.setAltitudeRequired(true);
-        criteria.setBearingRequired(false);
-        criteria.setSpeedRequired(false);
-        criteria.setCostAllowed(false);
+        boolean gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean networkStatus = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (provider == null) {
-            Log.d(TAG, "null");
-        }
+        // Criteria is a class that provides the parameters in the best strategy to get a location.
 
-        if (provider != null) {
-            // Get location permission
+
+        if (gpsStatus || networkStatus) {
+
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
+                // This is where the if block starts
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+
+                    startLocationUpdates();
+
+
+
+                }
+
             }
-            locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
-            location = locationManager.getLastKnownLocation(provider);
+            else {
+                Log.d(TAG, "Provider is null");
+            }
+
         }
 
-    }
+
+
+
     private void createWeather(JSONArray weatherArray) {
 
     }
@@ -191,10 +188,10 @@ public class MainActivity extends AppCompatActivity {
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Weather [] weather = createWeatherObject(response);
-                            setUI(weather);
-                            for(int i = 0; i < weather.length; i++) {
-                                Log.d(TAG, weather[i].toString());// SET UP UI
+                            Weather [] weatherArray = createWeatherObject(response);
+                            setUI(weatherArray);
+                            for(Weather weather: weatherArray) {
+                                Log.d(TAG, weather.toString());// SET UP UI
                             }
 
                         }
@@ -268,7 +265,14 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Json parsing error: " + e.getMessage());
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            startLocationUpdates();
+        }
 
+    }
 
     /**
      * Unregisters the location listener
@@ -314,5 +318,30 @@ public class MainActivity extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
 
         }
+    }
+    public void startLocationUpdates() {
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_HIGH);
+        criteria.setAltitudeRequired(true);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(false);
+        criteria.setCostAllowed(false);
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (provider != null) {
+            try {
+                locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
+            }
+            catch (SecurityException e) {
+                Log.d(TAG, e.getMessage());
+            }
+
+
+        }
+
+    }
+
+    public void d(String s) {
+        Log.d(TAG, s);
     }
 }
