@@ -8,19 +8,19 @@ import java.util.Date;
  */
 
 public class Weather {
-    private Date date;
+    private String date;
     private String description;
     private int lowTemp;
     private int highTemp;
 
-    public Weather(int date, String description, int lowTemp, int highTemp) {
-        this.date = new Date(date * 1000);
+    public Weather(String date, String description, int lowTemp, int highTemp) {
+        this.date = date;
         this.description = description;
         this.lowTemp = lowTemp;
         this.highTemp = highTemp;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

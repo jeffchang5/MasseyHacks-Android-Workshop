@@ -165,25 +165,22 @@ public class MainActivity extends AppCompatActivity {
             //Weather weather = new Weather(city);
             Log.d(TAG, "5 Day Forecast for " + city);
             Log.d(TAG, "5 Day Forecast for " + response.toString());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("E MM/dd");
             for (int i = 0; i < weatherList.length(); i++) {
                 JSONObject jweather = weatherList.getJSONObject(i);
                 JSONObject temp = jweather.getJSONObject("temp");
-                int timestamp = Integer.valueOf(jweather.getString("dt")) * 1000;
+                String timestamp = dateFormat.format(Double.valueOf(jweather.getString("dt")) * 1000);
                 JSONObject descObj = jweather.getJSONArray("weather").getJSONObject(0);
                 String description = descObj.getString("description");
                 int min = Math.round(Float.valueOf(temp.getString("min")));
                 int max = Math.round(Float.valueOf(temp.getString("max")));
                 weatherArray[i] = new Weather(timestamp, description, min, max);
             }
-
-            setUI(response);
         }
         catch(JSONException e) {
             Log.e(TAG, e.getMessage());
         }
         return weatherArray;
-
-
     }
     /**
      * Update UI to display new location
@@ -195,8 +192,10 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             Weather [] weather = createWeatherObject(response);
-                            Log.d(TAG, weather[0].toString());// SET UP UI
-
+                            setUI(weather);
+                            for(int i = 0; i < weather.length; i++) {
+                                Log.d(TAG, weather[i].toString());// SET UP UI
+                            }
 
                         }
                     },
@@ -236,40 +235,37 @@ public class MainActivity extends AppCompatActivity {
         requestWeather();
     }
 
-    private void setUI(JSONObject response) {
-        if (response != null) {
-            try {
-                /*
-                {
-                    "city": {
-                        "id": ... ,
-                        "city": ... ,
-                        ...
-                    },
-                    {...} ,
-                    "list": [
-                        {
-                            "dt": ... ,
-                            "temp": {
-                                "min":
-                                "max":
-                            }
-                            "weather": [
-                                "description"
-                            ]
+    private void setUI(Weather[] weather) {
+        try {
+            /*
+            {
+                "city": {
+                    "id": ... ,
+                    "city": ... ,
+                    ...
+                },
+                {...} ,
+                "list": [
+                    {
+                        "dt": ... ,
+                        "temp": {
+                            "min":
+                            "max":
                         }
-                    ]
-                }
-                 */
-
-
-
-
+                        "weather": [
+                            "description"
+                        ]
+                    }
+                ]
             }
-            catch (Exception e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
-            }
-            return;
+             */
+
+
+
+
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Json parsing error: " + e.getMessage());
         }
     }
 
