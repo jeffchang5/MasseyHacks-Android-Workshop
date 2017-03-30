@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     String url = null;
 
     LocationManager locationManager = null;
+    Location location = null;
     private ActiveListener activeListener = new ActiveListener();
 
     @Override
@@ -64,8 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        getLocation();
 
+        // Get location permission
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        }
+
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
@@ -118,12 +128,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getLocation() {
-        locationManager =  (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         // Create a Criteria object
         Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_LOW);
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_HIGH);
+        criteria.setAltitudeRequired(true);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(false);
+        criteria.setCostAllowed(false);
 
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
@@ -135,11 +147,10 @@ public class MainActivity extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
             }
             locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
-            Location location = locationManager.getLastKnownLocation(provider);
+            location = locationManager.getLastKnownLocation(provider);
         }
 
     }
@@ -160,9 +171,8 @@ public class MainActivity extends AppCompatActivity {
                 int timestamp = Integer.valueOf(jweather.getString("dt")) * 1000;
                 JSONObject descObj = jweather.getJSONArray("weather").getJSONObject(0);
                 String description = descObj.getString("description");
-                Log.d("daf", Integer.toString(Math.round(Integer.valueOf(temp.getString("min")))));
-                int min = Math.round(Integer.valueOf(temp.getString("min")));
-                int max = Math.round(Integer.valueOf(temp.getString("max")));
+                int min = Math.round(Float.valueOf(temp.getString("min")));
+                int max = Math.round(Float.valueOf(temp.getString("max")));
                 weatherArray[i] = new Weather(timestamp, description, min, max);
             }
 
