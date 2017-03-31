@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragmentFrame, new WeatherFragment());
         transaction.addToBackStack(null);
         transaction.commit();
-
-
     }
 
     @Override

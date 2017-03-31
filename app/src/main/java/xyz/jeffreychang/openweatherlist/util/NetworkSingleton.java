@@ -5,6 +5,8 @@ import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import xyz.jeffreychang.openweatherlist.WeatherFragment;
+
 /**
  * Created by jeffreychang on 3/7/17.
  */
@@ -14,7 +16,9 @@ public class NetworkSingleton {
 
     private static final int FORECAST_DAYS = 5;
     private static final String API_KEY = "577b001467139c35c3e90b3d2dcd4456";
-    private static final String URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
+    private final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily";
+    private final String CURRENT_WEATHER_URL = "api.openweathermap.org/data/2.5/weather";
+
 
     private RequestQueue mRequestQueue;
     private static NetworkSingleton mNetworkSingleton = null;
@@ -49,8 +53,15 @@ public class NetworkSingleton {
         getRequestQueue().add(req);
     }
 
-    public String urlBuilder(double lat, double lon) {
-        return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s&units=metric",
-                URL, lat, lon, FORECAST_DAYS, API_KEY);
+    public String urlBuilder(double lat, double lon, int type) {
+        if (type == WeatherFragment.WEATHER_FORECAST) {
+            return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s&units=metric",
+                    FORECAST_URL, lat, lon, FORECAST_DAYS, API_KEY);
+        } else if (type == WeatherFragment.CURRENT_WEATHER) {
+            return String.format("%s?lat=%s&lon=%s&cnt=%s&appid=%s&units=metric",
+                    FORECAST_URL, lat, lon, FORECAST_DAYS, API_KEY);
+        }
+
+        return null;
     }
 }
