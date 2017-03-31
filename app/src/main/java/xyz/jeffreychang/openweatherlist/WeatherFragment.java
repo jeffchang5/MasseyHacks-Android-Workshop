@@ -2,14 +2,14 @@ package xyz.jeffreychang.openweatherlist;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.SharedPreferences;
+import xyz.jeffreychang.openweatherlist.util.NetworkSingleton.API;
+
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,130 +38,184 @@ import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class WeatherFragment extends Fragment {
+    // member variables
     RecyclerView mRecyclerView;
+    private LocationManager mLocationManager;
+    private ActiveListener activeListener = new ActiveListener();
+    private Weather [] mForecastArray;
+    private Weather mCurrentWeather;
+    private NetworkSingleton mNetworkSingleton;
+
+    // some constants
     private final String TAG = "WeatherFragment";
     private final int REQUEST_CODE_LOCATION = 1;
-    private final static String LAT = "lat";
-    private final static String LON = "lon";
-    private final static String URL = "url";
+
+    public static final int CURRENT_WEATHER = 0;
+    public static final int WEATHER_FORECAST = 1;
 
     private double latitude;
     private double longitude;
-    private String url;
+    boolean valid = false;
 
-    private LocationManager locationManager;
-    private Location location;
-
-    private ActiveListener activeListener = new ActiveListener();
+    /** onCreateView
+     * This function is ran when the view is first created
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        // Get location permission
-
-
-        // Get the location manager
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        View v = inflater.inflate(R.layout.fragment_weather, container, false);
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(new WeatherAdapter());
+        mNetworkSingleton = NetworkSingleton.getInstance(getActivity());
 
-        return v;
-
-    }
-    private class ActiveListener implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            if (location != null && location.getAccuracy() < 500) {
-                updateLocation(location);
-                unregisterListeners();
-            }
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    }
-    private void requestWeather() {
-        if (url != null) {
-            JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Weather[] weatherArray = createWeatherObject(response);
-                            //setUI(weatherArray);
-                            for(Weather weather: weatherArray) {
-                                Log.d(TAG, weather.toString());// SET UP UI
-                            }
-
-                        }
-                    },
-
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e(TAG, "Couldn't get a response from server.");
-                                }
-                            });
-
-            NetworkSingleton.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
-        }
-    }
-    public void startLocationUpdates() {
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setPowerRequirement(Criteria.POWER_HIGH);
-        criteria.setAltitudeRequired(true);
-        criteria.setBearingRequired(false);
-        criteria.setSpeedRequired(false);
-        criteria.setCostAllowed(false);
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (provider != null) {
-            try {
-                locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
-            }
-            catch (SecurityException e) {
-                Log.d(TAG, e.getMessage());
-            }
-
-
-        }
-
-    }
-    private void unregisterListeners() {
-
-        try {
-            locationManager.removeUpdates(activeListener);
-        }
-        catch (Exception e){
-            Log.d(TAG, "There could no be updates for Location Manager");
-        }
-
+        return view;
     }
 
+    /** onResume
+     * This function is called whenever the application/fragment resumes
+     * from any interruption. It is also called right after onCreate()
+     */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_LOCATION) {
-            startLocationUpdates();
+    public void onResume() {
+        super.onResume();
+        if (valid){
+            requestWeather();
+        } else {
+            getLocation();
         }
-
     }
+
+    /** onPause
+     * This function is called when there is any interruption
+     * (e.g. home button pressed, alert dialog, notification bar is pulled down, etc.)
+     */
+    @Override
+    public void onPause() {
+        unregisterListeners();
+        super.onPause();
+    }
+
+    /**
+     * Handles getting location listener started
+     */
+    public void getLocation() {
+        boolean gpsStatus = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean networkStatus = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (gpsStatus || networkStatus) {
+            // criteria for provider
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
+            criteria.setPowerRequirement(Criteria.POWER_LOW);
+            criteria.setAltitudeRequired(true);
+            criteria.setBearingRequired(false);
+            criteria.setSpeedRequired(false);
+            criteria.setCostAllowed(false);
+
+            // Location permission handling
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // request location permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+            } else {
+                // get best provider based on criteria
+                String provider = mLocationManager.getBestProvider(criteria, true);
+                // start location listener
+                mLocationManager.requestLocationUpdates(provider, 500, 1, activeListener);
+                mLocationManager.getLastKnownLocation(provider);
+            }
+        } else {
+            Toast.makeText(getActivity(), "Location is not supported on this device", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Handles permission request callback
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLocation();
+        } else {
+            Toast.makeText(getActivity(), "Location permission denied.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * This function handles when location is acquired
+     */
+    private void updateLocation(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        valid = true;
+        // DEBUG
+        Log.d(TAG, location.getProvider());
+        Log.d(TAG, String.valueOf(location.getAccuracy()));
+        Log.d(TAG, String.valueOf(latitude));
+        Log.d(TAG, String.valueOf(longitude));
+
+        requestWeather();
+    }
+
+    /**
+     * This function handles API call to request weather data
+     */
+    private void requestWeather() {
+        String fiveDayUrl = mNetworkSingleton.urlBuilder(API.FIVE_DAY, latitude, longitude);
+        String sixteenDayUrl =  mNetworkSingleton.urlBuilder(API.SIXTEEN_DAY, latitude, longitude);
+        Log.d(TAG, fiveDayUrl);
+        Log.d(TAG, sixteenDayUrl);
+
+        final JsonObjectRequest currentWeatherRequest = new JsonObjectRequest
+                (Request.Method.GET, fiveDayUrl, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "Current Weather");
+                        mCurrentWeather = createWeatherObject(response)[0];
+                        Log.d(TAG, mCurrentWeather.toString());
+                    }
+                },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e(TAG, "Couldn't get a response from server.");
+                            }
+                        });
+
+        JsonObjectRequest forecastRequest = new JsonObjectRequest
+                (Request.Method.GET, sixteenDayUrl, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        mForecastArray = createWeatherObject(response);
+                        Log.d(TAG, "5 day Forecast");
+                        for(Weather weather: mForecastArray) {
+                            Log.d(TAG, weather.toString());// SET UP UI
+                        }
+
+                    }
+                },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e(TAG, "Couldn't get a response from server.");
+                            }
+                        });
+
+        NetworkSingleton.getInstance(getActivity()).addToRequestQueue(forecastRequest);
+        NetworkSingleton.getInstance(getActivity()).addToRequestQueue(currentWeatherRequest);
+    }
+
+    /** TODO: FIX this function to handle current weather api call response
+     * weather object
+     * @param response
+     * @return
+     */
     private Weather[] createWeatherObject(JSONObject response) {
         Weather [] weatherArray = new Weather[5];
         try {
@@ -189,63 +244,12 @@ public class WeatherFragment extends Fragment {
         return weatherArray;
     }
 
-    private void updateLocation(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-
-        url = NetworkSingleton.getInstance(getActivity()).urlBuilder(NetworkSingleton.API.SIXTEEN_DAY, latitude, longitude);
-
-        // DEBUG
-        Log.d(TAG, location.getProvider());
-        Log.d(TAG, String.valueOf(location.getAccuracy()));
-        Log.d(TAG, String.valueOf(latitude));
-        Log.d(TAG, String.valueOf(longitude));
-        Log.d(TAG, url);
-
-        // Save into preferences
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor edit = settings.edit();
-        edit.putString(LAT, String.valueOf(latitude));
-        edit.putString(LON, String.valueOf(longitude));
-        edit.putString(URL, url);
-        edit.apply();
-
-        requestWeather();
-    }
-
-    public void getLocation() {
 
 
-
-        // Create a Criteria object
-        boolean gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean networkStatus = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-        // Criteria is a class that provides the parameters in the best strategy to get a location.
-
-
-        if (gpsStatus || networkStatus) {
-
-            if (ActivityCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // This is where the if block starts
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-
-                startLocationUpdates();
-
-
-
-            }
-
-        }
-        else {
-            Log.d(TAG, "Provider is null");
-        }
-
-    }
-    public AlertDialog buildAlertDialog() {
+    /**
+     * builds the pop up dialog for help
+     */
+    public AlertDialog buildHelpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.help_message)
                 .setTitle(R.string.help_title)
@@ -253,31 +257,57 @@ public class WeatherFragment extends Fragment {
         return builder.create();
     }
 
-    @Override
-    public void onPause() {
-        unregisterListeners();
-        super.onPause();
+    /**
+     * Unregisters the location listener
+     */
+    private void unregisterListeners() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        } else {
+            try {
+                mLocationManager.removeUpdates(activeListener);
+            }
+            catch (Exception e){
+                return;
+            }
+        }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        if (url == null) {
-//            getLocation();
-//        } else {
-//            requestWeather();
-//        }
+    /**
+     * class to support location listener
+     */
+    private class ActiveListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null && location.getAccuracy() < 500) {
+                updateLocation(location);
+                unregisterListeners();
+            }
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
     }
-
-
-    public void setUI() {
-
-    }
-
 
     public void d(String s) {
         Log.d(TAG, s);
     }
+
 }
 
 
