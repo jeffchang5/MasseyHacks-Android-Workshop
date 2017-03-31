@@ -2,6 +2,8 @@ package xyz.jeffreychang.openweatherlist;
 
 import android.Manifest;
 import android.content.Context;
+
+import xyz.jeffreychang.openweatherlist.models.DailyWeather;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton.API;
 
 import android.content.pm.PackageManager;
@@ -33,7 +35,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
-import xyz.jeffreychang.openweatherlist.models.Weather;
 import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
@@ -42,8 +43,8 @@ public class WeatherFragment extends Fragment {
     RecyclerView mRecyclerView;
     private LocationManager mLocationManager;
     private ActiveListener activeListener = new ActiveListener();
-    private Weather [] mForecastArray;
-    private Weather mCurrentWeather;
+    private DailyWeather[] mForecastArray;
+    private DailyWeather mCurrentDailyWeather;
     private NetworkSingleton mNetworkSingleton;
 
     // some constants
@@ -97,6 +98,7 @@ public class WeatherFragment extends Fragment {
         unregisterListeners();
         super.onPause();
     }
+
 
     /**
      * Handles getting location listener started
@@ -167,34 +169,19 @@ public class WeatherFragment extends Fragment {
      * This function handles API call to request weather data
      */
     private void requestWeather() {
-        String fiveDayUrl = mNetworkSingleton.urlBuilder(API.FIVE_DAY, latitude, longitude);
+
         String sixteenDayUrl =  mNetworkSingleton.urlBuilder(API.SIXTEEN_DAY, latitude, longitude);
-        Log.d(TAG, fiveDayUrl);
         Log.d(TAG, sixteenDayUrl);
 
-        final JsonObjectRequest currentWeatherRequest = new JsonObjectRequest
-                (Request.Method.GET, fiveDayUrl, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, "Current Weather");
-                        mCurrentWeather = createWeatherObject(response)[0];
-                        Log.d(TAG, mCurrentWeather.toString());
-                    }
-                },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e(TAG, "Couldn't get a response from server.");
-                            }
-                        });
+
 
         JsonObjectRequest forecastRequest = new JsonObjectRequest
                 (Request.Method.GET, sixteenDayUrl, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mForecastArray = createWeatherObject(response);
+                        mForecastArray = createDailyWeatherObject(response);
                         Log.d(TAG, "5 day Forecast");
-                        for(Weather weather: mForecastArray) {
+                        for(DailyWeather weather: mForecastArray) {
                             Log.d(TAG, weather.toString());// SET UP UI
                         }
 
@@ -207,8 +194,8 @@ public class WeatherFragment extends Fragment {
                             }
                         });
 
-        NetworkSingleton.getInstance(getActivity()).addToRequestQueue(forecastRequest);
-        NetworkSingleton.getInstance(getActivity()).addToRequestQueue(currentWeatherRequest);
+        mNetworkSingleton.addToRequestQueue(forecastRequest);
+
     }
 
     /** TODO: FIX this function to handle current weather api call response
@@ -216,12 +203,12 @@ public class WeatherFragment extends Fragment {
      * @param response
      * @return
      */
-    private Weather[] createWeatherObject(JSONObject response) {
-        Weather [] weatherArray = new Weather[5];
+    private DailyWeather[] createDailyWeatherObject(JSONObject response) {
+        DailyWeather[] dailyWeatherArray = new DailyWeather[5];
         try {
             String city = response.getJSONObject("city").getString("name");
             JSONArray weatherList = response.getJSONArray("list");
-            //Weather weather = new Weather(city);
+
             Log.d(TAG, "5 Day Forecast for " + city);
             Log.d(TAG, "5 Day Forecast for " + response.toString());
 
@@ -235,13 +222,13 @@ public class WeatherFragment extends Fragment {
                 String description = descObj.getString("description");
                 int min = Math.round(Float.valueOf(temp.getString("min")));
                 int max = Math.round(Float.valueOf(temp.getString("max")));
-                weatherArray[i] = new Weather(timestamp, description, min, max);
+                dailyWeatherArray[i] = new DailyWeather(timestamp, description, min, max);
             }
         }
         catch(JSONException e) {
             Log.e(TAG, e.getMessage());
         }
-        return weatherArray;
+        return dailyWeatherArray;
     }
 
 
