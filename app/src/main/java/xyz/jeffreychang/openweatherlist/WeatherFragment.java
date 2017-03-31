@@ -72,18 +72,8 @@ public class WeatherFragment extends Fragment {
         return view;
     }
 
-    /** onPause
-     * This function is called when there is any interruption
-     * (e.g. home button pressed, alert dialog, notification bar is pulled down, etc.)
-     */
-    @Override
-    public void onPause() {
-        unregisterListeners();
-        super.onPause();
-    }
-
     /** onResume
-     * This function is called whenever the application resumes
+     * This function is called whenever the application/fragment resumes
      * from any interruption. It is also called right after onCreate()
      */
     @Override
@@ -94,6 +84,16 @@ public class WeatherFragment extends Fragment {
         } else {
             getLocation();
         }
+    }
+
+    /** onPause
+     * This function is called when there is any interruption
+     * (e.g. home button pressed, alert dialog, notification bar is pulled down, etc.)
+     */
+    @Override
+    public void onPause() {
+        unregisterListeners();
+        super.onPause();
     }
 
     /**
@@ -120,13 +120,13 @@ public class WeatherFragment extends Fragment {
                 // request location permission
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+            } else {
+                // get best provider based on criteria
+                String provider = locationManager.getBestProvider(criteria, true);
+                // start location listener
+                locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
+                locationManager.getLastKnownLocation(provider);
             }
-
-            // get best provider based on criteria
-            String provider = locationManager.getBestProvider(criteria, true);
-            // start location listener
-            locationManager.requestLocationUpdates(provider, 500, 1, activeListener);
-            locationManager.getLastKnownLocation(provider);
         } else {
             Toast.makeText(getActivity(), "Location is not supported on this device", Toast.LENGTH_SHORT).show();
         }
@@ -138,7 +138,9 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE_LOCATION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+        if (requestCode == REQUEST_CODE_LOCATION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLocation();
+        } else {
             Toast.makeText(getActivity(), "Location permission denied.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -207,7 +209,7 @@ public class WeatherFragment extends Fragment {
         NetworkSingleton.getInstance(getActivity()).addToRequestQueue(currentWeatherRequest);
     }
 
-    /**
+    /** TODO: FIX this function to handle current weather api call response
      * weather object
      * @param response
      * @return
