@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <item
+        android:id="@+id/show_secure"
+        android:enabled="true"
+        android:title=""
+        android:visible="true"
+        app:actionLayout="@layout/unitswitch"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/location"
-        android:title="@string/location"
-        android:icon="@android:drawable/ic_menu_mylocation"
-        app:showAsAction="ifRoom">
-    </item>
 
-    <item android:id="@+id/help"
+    <item android:id="@+id/history"
         android:title="@string/help_title"
-        android:icon="@android:drawable/ic_menu_help"
+        android:icon="@android:drawable/ic_menu_recent_history"
         app:showAsAction="ifRoom">
     </item>
+
 </menu>
