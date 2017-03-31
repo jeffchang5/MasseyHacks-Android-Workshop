@@ -4,7 +4,9 @@
     <string name="location">Location</string>
     <string name="help_title">Help</string>
     <string name="help_message">Click the location button to set your GPS."</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="fahrenheit">F°</string>
     <string name="celsius">C°</string>
+    <string name="empty">Empty</string>
+    <string name="icon">Weather Icon</string>
 </resources>
