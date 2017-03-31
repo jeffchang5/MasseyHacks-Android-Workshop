@@ -1,0 +1,88 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:2:1-25:12
+	package
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:3:5-47
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:6:22-76
+uses-feature#android.hardware.location.gps
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:7:5-66
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:7:19-63
+application
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:9:5-23:19
+MERGED from [com.android.support:appcompat-v7:25.2.0] /Users/jeffreychang/.android/build-cache/47acd751b6131d3f73d41839f13fa944af69b745/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.2.0] /Users/jeffreychang/.android/build-cache/475948e83aad9fe46c7bc2cb58533be08af30a07/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/jeffreychang/.android/build-cache/3e2f146355f39a3c12807e96307fec2f7e1960f1/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/jeffreychang/.android/build-cache/f1542bc282beb7879b79a10824fa6e3830137506/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/jeffreychang/.android/build-cache/6c7efe32dc76051dd2b38de0858c1716544e9bca/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] /Users/jeffreychang/.android/build-cache/92ba96df91b763b2feb46416ae972c73b4c9f8a1/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.2.0] /Users/jeffreychang/.android/build-cache/81985c78962dafd17041962a28a2113c24c81a11/output/AndroidManifest.xml:23:5-20
+MERGED from [com.android.volley:volley:1.0.0] /Users/jeffreychang/.android/build-cache/eac852658c1d8f44c6eac285d6462a165f2a5dcc/output/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.0-beta1] /Users/jeffreychang/.android/build-cache/fa75e2e54f368280d8c5f287460d57a55dee101e/output/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/jeffreychang/.android/build-cache/99067cb0eb48ca785fdcec4697bf203f91ee0a71/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] /Users/jeffreychang/.android/build-cache/36585b9eb3f040fbce3f4c1aeffd21b51dcc3c5b/output/AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:12:9-41
+	android:supportsRtl
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:14:9-35
+	android:roundIcon
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:13:9-54
+	android:allowBackup
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:10:9-35
+	android:icon
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:11:9-43
+	android:theme
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:15:9-40
+activity#xyz.jeffreychang.openweatherlist.MainActivity
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:16:9-22:20
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:16:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:17:13-21:29
+action#android.intent.action.MAIN
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml:20:27-74
+uses-sdk
+INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:25.2.0] /Users/jeffreychang/.android/build-cache/47acd751b6131d3f73d41839f13fa944af69b745/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.2.0] /Users/jeffreychang/.android/build-cache/475948e83aad9fe46c7bc2cb58533be08af30a07/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/jeffreychang/.android/build-cache/3e2f146355f39a3c12807e96307fec2f7e1960f1/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/jeffreychang/.android/build-cache/f1542bc282beb7879b79a10824fa6e3830137506/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/jeffreychang/.android/build-cache/6c7efe32dc76051dd2b38de0858c1716544e9bca/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] /Users/jeffreychang/.android/build-cache/92ba96df91b763b2feb46416ae972c73b4c9f8a1/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.2.0] /Users/jeffreychang/.android/build-cache/81985c78962dafd17041962a28a2113c24c81a11/output/AndroidManifest.xml:21:5-43
+MERGED from [com.android.volley:volley:1.0.0] /Users/jeffreychang/.android/build-cache/eac852658c1d8f44c6eac285d6462a165f2a5dcc/output/AndroidManifest.xml:7:5-43
+MERGED from [com.android.support.constraint:constraint-layout:1.0.0-beta1] /Users/jeffreychang/.android/build-cache/fa75e2e54f368280d8c5f287460d57a55dee101e/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:recyclerview-v7:25.2.0] /Users/jeffreychang/.android/build-cache/4d1f93811135ed757c31aed7bdf45061b4b5608a/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/jeffreychang/.android/build-cache/99067cb0eb48ca785fdcec4697bf203f91ee0a71/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] /Users/jeffreychang/.android/build-cache/36585b9eb3f040fbce3f4c1aeffd21b51dcc3c5b/output/AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.2.0] /Users/jeffreychang/.android/build-cache/47acd751b6131d3f73d41839f13fa944af69b745/output/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/src/main/AndroidManifest.xml

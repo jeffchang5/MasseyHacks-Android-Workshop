@@ -8,25 +8,35 @@
       @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body { 
+      body {
         font-family: 'Droid Sans';
-        color: white; 
-        line-height: 30px;
+        color: #2962FF;
         font-size: 2em;
+
+        line-height: 35px;
+
       }
 
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
-        color: #FF8674;
+        color: #1565C0;
         text-shadow: 3px -1px 2px rgba(150, 150, 150, 1);
         font-weight: normal;
       }
 
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-      
+
       .remark-slide-content{
-        background-color: #FF534E;
-        
+        background-color:#2196F3
+        /*background-color: ##0D47A1;*/
+
+      }
+      .hljs-rainbow .hljs {
+        background: #42A5F5;
+      }
+      .remark-code-line {
+        /*background-color:#64B5F6;*/
+        background: #64B5F6;
       }
 
     </style>
@@ -59,13 +69,9 @@ class: middle
 * Open-source project
 * Powers tablets, laptops, TV boxes, cars, watches
 
-```java
-System.out.println("Hello World");
-```
-
 ---
 
-# The Software Stack
+# Software Architecture
 
 .center[![Architecture](images/architecture.jpg)]
 
@@ -79,6 +85,25 @@ class: center middle
 
 IDE used specifically for Android app development.
 
+---
+class: middle
+
+# Activities
+
+* Represents user interface and logic of one particular screen
+* Lifecycle
+* Inflates a View object.
+
+---
+class: middle
+
+# Fragments
+
+* A piece of code and view that modularizes the content in an Activity.
+* Lifecycle
+* Activities can be organized into many fragments.
+
+
 
 
 
@@ -90,7 +115,7 @@ IDE used specifically for Android app development.
     </script>
     <script>
       var slideshow = remark.create({
-        
+
           navigation: {
             scroll: true,
             touch: true,

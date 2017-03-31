@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/jeffreychang/.android/build-cache/47acd751b6131d3f73d41839f13fa944af69b745/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/jeffreychang/.android/build-cache/47acd751b6131d3f73d41839f13fa944af69b745/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]

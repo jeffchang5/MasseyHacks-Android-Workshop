@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/show_secure"
+        android:enabled="true"
+        android:title=""
+        android:visible="true"
+        app:actionLayout="@layout/unitswitch"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/history"
+        android:title="@string/help_title"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        app:showAsAction="ifRoom">
+    </item>
+
+</menu>
