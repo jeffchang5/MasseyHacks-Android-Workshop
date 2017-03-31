@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,18 +37,18 @@ import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String TAG = "WeatherActivity";
+    private final String TAG = "WeatherActivity";
     private final int REQUEST_CODE_LOCATION = 1;
     private final static String LAT = "lat";
     private final static String LON = "lon";
     private final static String URL = "url";
 
-    double latitude;
-    double longitude;
-    String url;
+    private double latitude;
+    private double longitude;
+    private String url;
 
-    LocationManager locationManager;
-    Location location;
+    private LocationManager locationManager;
+    private Location location;
 
     private ActiveListener activeListener = new ActiveListener();
 
@@ -257,10 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        catch (Exception e) {
-            Log.e(TAG, "Json parsing error: " + e.getMessage());
-        }
-    }
+        catch (Excepti    }
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -268,13 +266,16 @@ public class MainActivity extends AppCompatActivity {
             startLocationUpdates();
         }
 
-    }
+    }on e) {
+            Log.e(TAG, "Json parsing error: " + e.getMessage());
+        }
+
 
     /**
      * Unregisters the location listener
      */
     private void unregisterListeners() {
-        if (ActivityCompat.checkSelfPermission(this,
+        if (FragmentCo.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             return;
