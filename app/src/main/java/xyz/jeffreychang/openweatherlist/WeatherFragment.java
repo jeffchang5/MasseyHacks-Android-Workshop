@@ -193,7 +193,7 @@ public class WeatherFragment extends Fragment {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-        url = NetworkSingleton.getInstance(getActivity()).urlBuilder(latitude, longitude);
+        url = NetworkSingleton.getInstance(getActivity()).urlBuilder(NetworkSingleton.API.SIXTEEN_DAY, latitude, longitude);
 
         // DEBUG
         Log.d(TAG, location.getProvider());
