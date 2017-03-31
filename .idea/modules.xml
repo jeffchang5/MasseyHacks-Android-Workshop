@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MasseyHacks-Android-Workshop.iml" filepath="$PROJECT_DIR$/MasseyHacks-Android-Workshop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gh-pages MasseyHacks-Android-Workshop.iml" filepath="$PROJECT_DIR$/.idea/gh-pages MasseyHacks-Android-Workshop.iml" />
     </modules>
   </component>
