@@ -13,6 +13,7 @@ import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 
 public class WeatherFragment extends Fragment {
     RecyclerView mRecyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

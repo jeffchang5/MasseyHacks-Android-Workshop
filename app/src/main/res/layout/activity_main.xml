@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     tools:context="xyz.jeffreychang.openweatherlist.MainActivity">
     <include layout="@layout/toolbar_main" />
-    <fragment
-        android:id="@+id/WeatherFragment"
+    <FrameLayout
+        android:id="@+id/fragmentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_weather"
-        android:name="xyz.jeffreychang.openweatherlist.WeatherFragment">
+        android:layout_height="match_parent">
 
-    </fragment>
+    </FrameLayout>
+    <!--<fragment-->
+        <!--android:id="@+id/WeatherFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:layout="@layout/fragment_weather"-->
+        <!--android:name="xyz.jeffreychang.openweatherlist.WeatherFragment">-->
+
+    <!--</fragment>-->
 
 </LinearLayout>

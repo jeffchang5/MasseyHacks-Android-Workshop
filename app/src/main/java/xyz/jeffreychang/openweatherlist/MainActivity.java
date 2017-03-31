@@ -93,11 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.location:
-                Toast.makeText(this, "Location selected", Toast.LENGTH_SHORT).show();
-                getLocation();
-                break;
-            case R.id.help:
+            case R.id.history:
                 Log.d(TAG, "Help selected");
                 Toast.makeText(this, "Help selected", Toast.LENGTH_SHORT).show();
                 buildAlertDialog().show();
@@ -232,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         requestWeather();
     }
 
-    private void setUI(Weather[] weather) {
+    private void    setUI(Weather[] weather) {
         try {
             /*
             {

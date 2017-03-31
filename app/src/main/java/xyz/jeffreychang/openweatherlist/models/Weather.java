@@ -32,7 +32,6 @@ public class Weather {
         return lowTemp;
     }
 
-    @Override
     public String toString() {
         return "Weather{" +
                 "date=" + date +
