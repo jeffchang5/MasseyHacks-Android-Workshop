@@ -8,16 +8,12 @@
     <include layout="@layout/toolbar_main" />
     <FrameLayout
         android:id="@+id/fragmentFrame"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </FrameLayout>
 
-    <fragment
-        android:id="@+id/fragment_weather"
-        android:name="xyz.jeffreychang.openweatherlist.WeatherFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <!--<fragment-->
         <!--android:id="@+id/WeatherFragment"-->
         <!--android:layout_width="match_parent"-->
