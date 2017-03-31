@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>An Introduction to Android</title>
     <meta charset="utf-8">
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body {
-        font-family: 'Droid Sans';
-        color: #2962FF;
-        font-size: 2em;
+        body {
+            font-family: 'Droid Sans';
+            color: white;
+            font-size: 2em;
+            line-height: 35px;
+        }
 
-        line-height: 35px;
 
-      }
+        h1, h2, h3 {
+            font-family: 'Yanone Kaffeesatz';
+            color: #fff564;
+            text-shadow: 3px -1px 2px rgba(150, 150, 150, 1);
+            font-weight: normal;
+        }
 
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        color: #1565C0;
-        text-shadow: 3px -1px 2px rgba(150, 150, 150, 1);
-        font-weight: normal;
-      }
+        .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+        .remark-slide-content{
+            background-color: #FF534E;
+        }
+        .hljs-rainbow .hljs {
+            background: #42A5F5;
+        }
 
-      .remark-slide-content{
-        background-color:#2196F3
-        /*background-color: ##0D47A1;*/
+        .remark-code-line {
+            /*background-color:#64B5F6;*/
+            background: #64B5F6;
+        }
 
-      }
-      .hljs-rainbow .hljs {
-        background: #42A5F5;
-      }
-      .remark-code-line {
-        /*background-color:#64B5F6;*/
-        background: #64B5F6;
-      }
+        .image-48 img {
+            width: 48%;
+        }
 
     </style>
-  </head>
-  <body>
-    <textarea id="source">
+</head>
+
+<body>
+<textarea id="source">
 
 class: center, middle
 
@@ -70,10 +73,11 @@ class: middle
 * Powers tablets, laptops, TV boxes, cars, watches
 
 ---
+class: middle
 
 # Software Architecture
 
-.center[![Architecture](images/architecture.jpg)]
+.center[.image-48[![Architecture](images/android-stack_2x.png)]]
 
 ---
 
@@ -111,18 +115,18 @@ class: middle
 
 
     </textarea>
-    <script src="remark.min.js">
-    </script>
-    <script>
-      var slideshow = remark.create({
+<script src="remark.min.js">
+</script>
+<script>
+    var slideshow = remark.create({
 
-          navigation: {
+        navigation: {
             scroll: true,
             touch: true,
             click: false
-          },
-          highlightStyle: "rainbow"
+        },
+        highlightStyle: "rainbow"
     });
-    </script>
-  </body>
+</script>
+</body>
 </html>
