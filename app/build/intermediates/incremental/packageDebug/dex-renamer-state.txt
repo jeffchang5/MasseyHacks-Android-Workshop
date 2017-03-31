@@ -1,7 +1,0 @@
-#Thu Mar 30 20:20:50 EDT 2017
-base.0=/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1ef22e425ce4d581cf6653be0d6b81dc99ce976c
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c0f402e32d77372f1e2a336188eca31b4b870a78/classes.dex
-base.1=/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c0f402e32d77372f1e2a336188eca31b4b870a78
-file.0=/Users/jeffreychang/Hackathon/MasseyHacks-Android-Workshop/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1ef22e425ce4d581cf6653be0d6b81dc99ce976c/classes.dex
