@@ -61,3 +61,5 @@ fabric.properties
 /.gradle/*
 /app/*
 /build/*
+/app/build/intermediates/*
+/build/android-profile/*
