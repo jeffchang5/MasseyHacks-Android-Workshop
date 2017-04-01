@@ -19,11 +19,11 @@ import xyz.jeffreychang.openweatherlist.models.HourlyWeather;
 
 public class WeatherAdapter extends RecyclerView.Adapter {
     private final String TAG = "WeatherAdapter";
-    private ArrayList <DailyWeather> weatherList;
+    private ArrayList<DailyWeather> weatherList;
 
 
 
-    public WeatherAdapter(ArrayList <DailyWeather> weatherList) {
+    public WeatherAdapter(ArrayList<DailyWeather> weatherList) {
         this.weatherList = weatherList;
 
 
@@ -51,7 +51,7 @@ public class WeatherAdapter extends RecyclerView.Adapter {
 
         }
         else {
-            Log.d(TAG, weatherList.get(position).getDate().toString());
+            //Log.d(TAG, weatherList.get(position).getDate().toString());
         }
 
 
@@ -60,10 +60,12 @@ public class WeatherAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "HI");
+        //Log.d(TAG, "HI");
         if (weatherList == null) {
-            return 0;
+            Log.d(TAG, "WeatherList is empty");
+            return 1;
         }
+        //Log.d(TAG, Integer.toString(weatherList.size()));
         return weatherList.size();
 
     }

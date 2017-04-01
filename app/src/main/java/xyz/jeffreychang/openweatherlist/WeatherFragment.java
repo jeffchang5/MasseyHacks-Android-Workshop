@@ -31,8 +31,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
@@ -42,7 +42,7 @@ public class WeatherFragment extends Fragment {
     RecyclerView mRecyclerView;
     private LocationManager mLocationManager;
     private ActiveListener activeListener = new ActiveListener();
-    private ArrayList<DailyWeather> mDailyWeatherList;
+    private ArrayList<DailyWeather> mDailyWeatherArray;
     private NetworkSingleton mNetworkSingleton;
 
     // some constants
@@ -64,7 +64,6 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         mNetworkSingleton = NetworkSingleton.getInstance(getActivity());
-        requestWeather();
     }
 
 
@@ -78,7 +77,9 @@ public class WeatherFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.hasFixedSize();
-        mAdapter = new WeatherAdapter(mDailyWeatherList);
+        //mDailyWeatherArray = new DailyWeather[5];
+
+        mAdapter = new WeatherAdapter(mDailyWeatherArray);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -187,15 +188,14 @@ public class WeatherFragment extends Fragment {
                 (Request.Method.GET, sixteenDayUrl, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mDailyWeatherList = mNetworkSingleton.createDailyWeatherObject(response);
+                        DailyWeather[] array = mNetworkSingleton.createDailyWeatherArray(response);
+                        for (DailyWeather dw: array) {
+                            mDailyWeatherArray.add(dw);
+                        }
 
 
-
-                        Log.d(TAG, "5 day Forecast");
                         mAdapter.notifyDataSetChanged();
-//                        for(DailyWeather weather: mDailyWeatherArray) {
-//                            Log.d(TAG, weather.toString());// SET UP UI
-//                        }
+
 
 
                     }

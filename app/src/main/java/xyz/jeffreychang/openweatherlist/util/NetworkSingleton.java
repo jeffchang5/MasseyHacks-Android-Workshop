@@ -87,13 +87,13 @@ public class NetworkSingleton {
         }
 
     }
-    public ArrayList<DailyWeather> createDailyWeatherObject(JSONObject response) {
+    public DailyWeather[] createDailyWeatherArray(JSONObject response) {
 
         try {
             String city = response.getJSONObject("city").getString("name");
             JSONArray weatherList = response.getJSONArray("list");
 
-            ArrayList<DailyWeather> dailyWeatherList = new ArrayList<DailyWeather>();
+            DailyWeather[] dailyWeatherList = new DailyWeather[weatherList.length()];
 
 
             for (int i = 0; i < weatherList.length(); i++) {
@@ -102,13 +102,14 @@ public class NetworkSingleton {
                 JSONObject descObj = weatherObject.getJSONArray("weather").getJSONObject(0);
 
 
-                 dailyWeatherList.add(
+                 dailyWeatherList[i] =
                          new DailyWeather(
                                 descObj.getString("description"),
                                 SimpleDateFormat.getDateInstance().format(Double.valueOf(weatherObject.getString("dt")) * 1000),
                                 Math.round(Float.valueOf(temp.getString("min"))),
                                 Math.round(Float.valueOf(temp.getString("max")))
-                        ));
+                        );
+                return dailyWeatherList;
             }
         }
         catch(JSONException e) {
@@ -118,7 +119,7 @@ public class NetworkSingleton {
 
     }
 
-    public HourlyWeather[] createHourlyWeatherArray(JSONObject response) {
+    public HourlyWeather[]  createHourlyWeatherArray(JSONObject response) {
 
         try {
             String city = response.getJSONObject("city").getString("name");
