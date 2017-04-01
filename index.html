@@ -30,16 +30,19 @@
         }
 
         .hljs-rainbow .hljs {
-            background: #42A5F5;
+            background: #272822;
         }
 
         .remark-code-line {
-            /*background-color:#64B5F6;*/
             background: #272822;
         }
 
         .image-48 img {
             width: 48%;
+        }
+
+        .image-55 img {
+            width: 55%;
         }
 
     </style>
@@ -54,6 +57,30 @@ class: center, middle
 
 Jeffrey Chang, Pranay Kandru, Han Wang
 
+
+---
+class: middle
+
+# Before We Get Started
+
+* Install Android Studio
+  * https://developer.android.com
+* Sign up for OpenWeatherAPI Key
+  * https://home.openweathermap.org/users/sign_up
+
+---
+
+class: middle
+# What We Will Talk About
+
+* Very Brief History of Android
+* Software Architecture
+* Android Application Life Cycle
+* Introduction to Android Development
+  * Activities
+  * Fragments
+  * Adapter View
+  * Make API Calls using Volley
 
 ---
 class: middle
@@ -75,10 +102,24 @@ class: middle
 
 ---
 class: middle
+# Java Programming
 
-# Software Architecture
+```java
+import java.io.*;			// specify the Java libraries used
+public class exampleClass {		// name of the main class
+	public static void main (String [] args) throws Exception {
+		int i = 1, j = 2;
+		System.out.println(“Hello World!”);
+		System.out.println(i + “+” + j + “=“ + (i+j));
+	}
+}
 
-.center[.image-48[![Architecture](images/android-stack_2x.png)]]
+Output
+>javac exampleClass.java
+>java exampleClass
+Hello World
+1+2=3
+```
 
 ---
 
@@ -87,11 +128,25 @@ class: center middle
 # Android Studio
 
 IDE used specifically for Android app development.
-```
-https://developer.android.com
-```
 
 ---
+
+class: middle
+
+# Software Architecture
+
+.center[.image-48[![Architecture](images/android-stack_2x.png)]]
+
+---
+
+class: middle
+
+# Application Lifecycle
+
+.center[.image-55[![Architecture](images/activity_lifecycle.png)]]
+
+---
+
 class: middle
 
 # Activities
@@ -109,14 +164,29 @@ class: middle
 * Lifecycle
 * Activities can be organized into many fragments.
 
+---
+
+class: middle
+
+# Let's Get Started
+
+* Download our skeleton project:
+  * http://msu.edu/~wangha31/weatherDemo.zip
+* Open Android Studio
+* Start a new Android Studio project
+  * Application Name: WeatherDemo
+  * Company domain: reverse URL (e.g. name.masseyhacks3.ca)
+  * Check "Phone and Tablet"
+        * Select API 21 (40.5% device support)
+  * Add No Activity
+  * Finish
+    
 
 
 
 
+</textarea>
 
-
-
-    </textarea>
 <script src="remark.min.js">
 </script>
 <script>
@@ -127,7 +197,7 @@ class: middle
             touch: true,
             click: false
         },
-        highlightStyle: "rainbow"
+        highlightStyle: "monokai"
     });
 </script>
 </body>
