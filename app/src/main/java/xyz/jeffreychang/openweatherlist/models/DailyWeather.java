@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by jeffreychang on 3/7/17.
  */
 
+
 public class DailyWeather {
     private String date;
     private String description;
