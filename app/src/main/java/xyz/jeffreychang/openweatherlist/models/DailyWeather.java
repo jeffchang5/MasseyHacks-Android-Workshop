@@ -7,13 +7,13 @@ import java.util.Date;
  * Created by jeffreychang on 3/7/17.
  */
 
-public class Weather {
+public class DailyWeather {
     private String date;
     private String description;
     private int lowTemp;
     private int highTemp;
 
-    public Weather(String date, String description, int lowTemp, int highTemp) {
+    public DailyWeather(String date, String description, int lowTemp, int highTemp) {
         this.date = date;
         this.description = description;
         this.lowTemp = lowTemp;
@@ -33,7 +33,7 @@ public class Weather {
     }
 
     public String toString() {
-        return "Weather{" +
+        return "DailyWeather{" +
                 "date=" + date +
                 ", description='" + description + '\'' +
                 ", lowTemp=" + lowTemp +
