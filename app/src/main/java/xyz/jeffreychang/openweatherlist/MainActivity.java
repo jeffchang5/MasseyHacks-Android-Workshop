@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction= fragmentManager.beginTransaction();
         //transaction.replace(R.id.fragmentFrame, DetailFragment.getInstance(new Date(), 42.4806, 83.4755, 1));
-
-        //new WeatherFragment()
+        transaction.replace(R.id.fragmentFrame, new WeatherFragment());
         transaction.addToBackStack(null);
         transaction.commit();
     }

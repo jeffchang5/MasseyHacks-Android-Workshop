@@ -12,7 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import xyz.jeffreychang.openweatherlist.WeatherFragment;
 import xyz.jeffreychang.openweatherlist.models.DailyWeather;
@@ -85,13 +87,13 @@ public class NetworkSingleton {
         }
 
     }
-    public DailyWeather[] createDailyWeatherObject(JSONObject response) {
+    public ArrayList<DailyWeather> createDailyWeatherObject(JSONObject response) {
 
         try {
             String city = response.getJSONObject("city").getString("name");
             JSONArray weatherList = response.getJSONArray("list");
 
-            DailyWeather[] dailyWeatherArray = new DailyWeather[weatherList.length()];
+            ArrayList<DailyWeather> dailyWeatherList = new ArrayList<DailyWeather>();
 
 
             for (int i = 0; i < weatherList.length(); i++) {
@@ -99,16 +101,15 @@ public class NetworkSingleton {
                 JSONObject temp = weatherObject.getJSONObject("temp");
                 JSONObject descObj = weatherObject.getJSONArray("weather").getJSONObject(0);
 
-                dailyWeatherArray[i] =
 
-                        new DailyWeather(
+                 dailyWeatherList.add(
+                         new DailyWeather(
                                 descObj.getString("description"),
                                 SimpleDateFormat.getDateInstance().format(Double.valueOf(weatherObject.getString("dt")) * 1000),
                                 Math.round(Float.valueOf(temp.getString("min"))),
                                 Math.round(Float.valueOf(temp.getString("max")))
-                        );
+                        ));
             }
-            return dailyWeatherArray;
         }
         catch(JSONException e) {
             Log.e(TAG, e.getMessage());

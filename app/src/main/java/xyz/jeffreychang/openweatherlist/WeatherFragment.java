@@ -31,6 +31,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+
 import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
 
@@ -39,8 +42,7 @@ public class WeatherFragment extends Fragment {
     RecyclerView mRecyclerView;
     private LocationManager mLocationManager;
     private ActiveListener activeListener = new ActiveListener();
-    private DailyWeather[] mDailyWeatherArray;
-    private DailyWeather mCurrentDailyWeather;
+    private ArrayList<DailyWeather> mDailyWeatherList;
     private NetworkSingleton mNetworkSingleton;
 
     // some constants
@@ -50,6 +52,7 @@ public class WeatherFragment extends Fragment {
     public static final int CURRENT_WEATHER = 0;
     public static final int WEATHER_FORECAST = 1;
 
+    private WeatherAdapter mAdapter;
     private double latitude;
     private double longitude;
     boolean valid = false;
@@ -61,6 +64,7 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         mNetworkSingleton = NetworkSingleton.getInstance(getActivity());
+        requestWeather();
     }
 
 
@@ -73,7 +77,9 @@ public class WeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new WeatherAdapter());
+        mRecyclerView.hasFixedSize();
+        mAdapter = new WeatherAdapter(mDailyWeatherList);
+        mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -174,7 +180,6 @@ public class WeatherFragment extends Fragment {
     private void requestWeather() {
 
         String sixteenDayUrl =  mNetworkSingleton.urlBuilder(API.SIXTEEN_DAY, latitude, longitude);
-        Log.d(TAG, sixteenDayUrl);
 
 
 
@@ -182,11 +187,16 @@ public class WeatherFragment extends Fragment {
                 (Request.Method.GET, sixteenDayUrl, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mDailyWeatherArray = mNetworkSingleton.createDailyWeatherObject(response);
+                        mDailyWeatherList = mNetworkSingleton.createDailyWeatherObject(response);
+
+
+
                         Log.d(TAG, "5 day Forecast");
-                        for(DailyWeather weather: mDailyWeatherArray) {
-                            Log.d(TAG, weather.toString());// SET UP UI
-                        }
+                        mAdapter.notifyDataSetChanged();
+//                        for(DailyWeather weather: mDailyWeatherArray) {
+//                            Log.d(TAG, weather.toString());// SET UP UI
+//                        }
+
 
                     }
                 },
