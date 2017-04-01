@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "WeatherActivity";
@@ -21,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction= fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentFrame, new WeatherFragment());
+        //transaction.replace(R.id.fragmentFrame, DetailFragment.getInstance(new Date(), 42.4806, 83.4755, 1));
+
+        //new WeatherFragment()
         transaction.addToBackStack(null);
         transaction.commit();
     }

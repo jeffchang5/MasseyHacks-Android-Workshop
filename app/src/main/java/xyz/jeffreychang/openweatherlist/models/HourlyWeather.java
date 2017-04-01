@@ -13,6 +13,17 @@ public class HourlyWeather {
     private final int pressure;
     private final int humidity;
 
+    @Override
+    public String toString() {
+        return "HourlyWeather{" +
+                "date=" + date +
+                ", minTemp=" + minTemp +
+                ", maxTemp=" + maxTemp +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                '}';
+    }
+
     public HourlyWeather(Date date, int minTemp, int maxTemp, int pressure, int humidity) {
         this.date = date;
         this.minTemp = minTemp;

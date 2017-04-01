@@ -15,13 +15,14 @@ import xyz.jeffreychang.openweatherlist.recyclerview.WeatherViewHolder;
 
 public class WeatherAdapter extends RecyclerView.Adapter {
 
+    public WeatherAdapter() {
+
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // LayoutInflater instantiates a new View object from a XML file
 
         View itemLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather, parent, false);
-        Log.d("TAG", itemLayout.toString());
-
         return new WeatherViewHolder(itemLayout);
 
 

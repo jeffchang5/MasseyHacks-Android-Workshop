@@ -29,11 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 
 import xyz.jeffreychang.openweatherlist.recyclerview.WeatherAdapter;
 import xyz.jeffreychang.openweatherlist.util.NetworkSingleton;
@@ -43,7 +39,7 @@ public class WeatherFragment extends Fragment {
     RecyclerView mRecyclerView;
     private LocationManager mLocationManager;
     private ActiveListener activeListener = new ActiveListener();
-    private DailyWeather[] mForecastArray;
+    private DailyWeather[] mDailyWeatherArray;
     private DailyWeather mCurrentDailyWeather;
     private NetworkSingleton mNetworkSingleton;
 
@@ -58,19 +54,26 @@ public class WeatherFragment extends Fragment {
     private double longitude;
     boolean valid = false;
 
+
+
+    @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        mNetworkSingleton = NetworkSingleton.getInstance(getActivity());
+    }
+
+
     /** onCreateView
      * This function is ran when the view is first created
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(new WeatherAdapter());
-        mNetworkSingleton = NetworkSingleton.getInstance(getActivity());
 
         return view;
     }
@@ -179,9 +182,9 @@ public class WeatherFragment extends Fragment {
                 (Request.Method.GET, sixteenDayUrl, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        mForecastArray = createDailyWeatherObject(response);
+                        mDailyWeatherArray = mNetworkSingleton.createDailyWeatherObject(response);
                         Log.d(TAG, "5 day Forecast");
-                        for(DailyWeather weather: mForecastArray) {
+                        for(DailyWeather weather: mDailyWeatherArray) {
                             Log.d(TAG, weather.toString());// SET UP UI
                         }
 
@@ -203,33 +206,6 @@ public class WeatherFragment extends Fragment {
      * @param response
      * @return
      */
-    private DailyWeather[] createDailyWeatherObject(JSONObject response) {
-        DailyWeather[] dailyWeatherArray = new DailyWeather[5];
-        try {
-            String city = response.getJSONObject("city").getString("name");
-            JSONArray weatherList = response.getJSONArray("list");
-
-            Log.d(TAG, "5 Day Forecast for " + city);
-            Log.d(TAG, "5 Day Forecast for " + response.toString());
-
-
-
-            for (int i = 0; i < weatherList.length(); i++) {
-                JSONObject jweather = weatherList.getJSONObject(i);
-                JSONObject temp = jweather.getJSONObject("temp");
-                String timestamp = SimpleDateFormat.getDateInstance().format(Double.valueOf(jweather.getString("dt")) * 1000);
-                JSONObject descObj = jweather.getJSONArray("weather").getJSONObject(0);
-                String description = descObj.getString("description");
-                int min = Math.round(Float.valueOf(temp.getString("min")));
-                int max = Math.round(Float.valueOf(temp.getString("max")));
-                dailyWeatherArray[i] = new DailyWeather(timestamp, description, min, max);
-            }
-        }
-        catch(JSONException e) {
-            Log.e(TAG, e.getMessage());
-        }
-        return dailyWeatherArray;
-    }
 
 
 
@@ -256,7 +232,7 @@ public class WeatherFragment extends Fragment {
                 mLocationManager.removeUpdates(activeListener);
             }
             catch (Exception e){
-                return;
+                Log.d(TAG, e.getLocalizedMessage());
             }
         }
     }
