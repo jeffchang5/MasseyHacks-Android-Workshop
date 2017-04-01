@@ -12,12 +12,14 @@ public class DailyWeather {
     private String description;
     private int lowTemp;
     private int highTemp;
+    private String icon;
 
-    public DailyWeather(String date, String description, int lowTemp, int highTemp) {
+    public DailyWeather(String date, String description, int lowTemp, int highTemp, String icon) {
         this.date = date;
         this.description = description;
         this.lowTemp = lowTemp;
         this.highTemp = highTemp;
+        this.icon = icon;
     }
 
     public String getDate() {
@@ -32,12 +34,15 @@ public class DailyWeather {
         return lowTemp;
     }
 
+    public String getIcon(){ return icon;}
+
     public String toString() {
         return "DailyWeather{" +
                 "date=" + date +
                 ", description='" + description + '\'' +
                 ", lowTemp=" + lowTemp +
                 ", highTemp=" + highTemp +
+                ", highTemp=" + icon +
                 '}';
     }
 

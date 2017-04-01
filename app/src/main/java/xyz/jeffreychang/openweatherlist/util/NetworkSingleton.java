@@ -105,7 +105,8 @@ public class NetworkSingleton {
                                 descObj.getString("description"),
                                 SimpleDateFormat.getDateInstance().format(Double.valueOf(weatherObject.getString("dt")) * 1000),
                                 Math.round(Float.valueOf(temp.getString("min"))),
-                                Math.round(Float.valueOf(temp.getString("max")))
+                                Math.round(Float.valueOf(temp.getString("max"))),
+                                descObj.getString("icon")
                         );
             }
             return dailyWeatherArray;
